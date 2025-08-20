@@ -1,14 +1,30 @@
 import * as z from "zod";
 
 export const InterviewFormSchema = z.object({
-  Jobtitle: z.string().min(1, {
-    message:
-      "Provide me proper Job Description like Full-Stack Developer/Frontend Developer.",
-  }),
-  Skills: z.string().min(1, {
-    message: "Provide me proper Skills like React.js, Next.js, Node.js.",
-  }),
-  YearofExprience: z
+  JobTitle: z
+    .string()
+    .trim()
+    .min(3, {
+      message:
+        "Job title must be at least 3 characters. Example: Frontend Developer, Full Stack Engineer.",
+    })
+    .max(100, { message: "Job title is too long." }),
+
+  Skills: z
+    .array(
+      z
+        .string()
+        .trim()
+        .min(2, { message: "Each skill must be at least 2 characters." })
+        .max(50, { message: "Skill name too long." })
+    )
+    .nonempty({ message: "At least one skill is required." }),
+
+  YearsOfExperience: z
     .number()
-    .min(1, { message: "Provide me proper YOE like 0,1...etc." }),
+    .int({ message: "Years of experience must be an integer." })
+    .min(0, { message: "Years of experience cannot be negative." })
+    .max(50, { message: "Years of experience seems unrealistic." }),
 });
+
+export type InterviewFormType = z.infer<typeof InterviewFormSchema>;
