@@ -1,3 +1,4 @@
+// schema.ts
 import * as z from "zod";
 
 export const InterviewFormSchema = z.object({
@@ -11,14 +12,11 @@ export const InterviewFormSchema = z.object({
     .max(100, { message: "Job title is too long." }),
 
   Skills: z
-    .array(
-      z
-        .string()
-        .trim()
-        .min(2, { message: "Each skill must be at least 2 characters." })
-        .max(50, { message: "Skill name too long." })
-    )
-    .nonempty({ message: "At least one skill is required." }),
+    .string()
+    .min(1, { message: "At least one skill is required." })
+    .refine((val) => val.split(/,|\s+/).filter(Boolean).length > 0, {
+      message: "At least one skill is required.",
+    }),
 
   YearsOfExperience: z
     .number()

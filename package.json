@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^6.30.2",
     "@google/generative-ai": "^0.24.1",
+    "@hookform/resolvers": "^5.2.1",
     "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-menubar": "^1.1.16",
     "@radix-ui/react-slot": "^1.2.3",
