@@ -8,7 +8,7 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "../app/ui/menubar";
+} from "@/ui/menubar";
 import { MenuIcon } from "lucide-react";
 import { NAV_LINKS } from "../lib/Data";
 import Link from "next/link";

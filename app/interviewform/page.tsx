@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   InterviewFormSchema,
   InterviewFormType,
-} from "@/app/Schema/InterviewFormSchema";
+} from "@/Schema/InterviewFormSchema";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -23,10 +23,26 @@ export default function InterviewForm() {
     },
   });
 
-  function onSubmit(values: InterviewFormType) {
-    setSubmittedData(values);
-    console.log("✅ Submitted:", values);
-  }
+  const onSubmit = async (values: InterviewFormType) => {
+    try {
+      const res = await fetch("/api/interview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setSubmittedData(values);
+      } else {
+        alert("Failed to save interview details");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error saving interview details");
+    }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
@@ -127,7 +143,7 @@ export default function InterviewForm() {
             </motion.div>
           </form>
 
-          {/* Preview Submitted Data */}
+          {/* Preview Submitted Data
           {submittedData && (
             <motion.div
               className="mt-6 p-4 bg-gray-50 rounded-lg border"
@@ -140,7 +156,7 @@ export default function InterviewForm() {
                 {JSON.stringify(submittedData, null, 2)}
               </pre>
             </motion.div>
-          )}
+          )} */}
         </div>
       </motion.div>
     </div>

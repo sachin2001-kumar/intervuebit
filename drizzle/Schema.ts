@@ -1,24 +1,23 @@
-import { PgTable, serial, varchar } from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, text, timestamp } from "drizzle-orm/pg-core";
 
-export const InterviewDetails = PgTable("InterviewDetails", {
+export const InterviewDetails = pgTable("InterviewDetails", {
   id: serial("id").primaryKey(),
-  createdAt: varchar("CreatedAt").notNull(),
-  createdAt: varchar("CreatedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
   JsonMockResp: text("JsonMockResp").notNull(),
-  JobPosition: varchar("JobPosition").notNull(),
-  JobDesc: varchar("JobDesc").notNull(),
-  JobExp: varchar("JobExp").notNull(),
-  mockId: varchar("mockId").notNull(),
+  JobPosition: varchar("JobPosition", { length: 255 }).notNull(),
+  JobDesc: text("JobDesc").notNull(),
+  JobExp: varchar("JobExp", { length: 50 }).notNull(),
+  mockId: varchar("mockId", { length: 255 }).notNull(),
 });
 
-export const UserAnswerDetails = PgTable("UserAnswerDetails", {
+export const UserAnswerDetails = pgTable("UserAnswerDetails", {
   id: serial("id").primaryKey(),
-  mockIdRef: varchar("mockId").notNull(),
-  Question: varchar("Questions").notNull(),
-  CorrectAns: varchar("CorrectAns").notNull(),
-  UserAns: varchar("UserAns").notNull(),
-  feedback: varchar("feedback"),
-  rating: varchar("rating"),
-  createdAt: varchar("CreatedAt"),
-  Useremail: varchar("Useremail").notNull(),
+  mockIdRef: varchar("mockIdRef", { length: 255 }).notNull(),
+  Question: text("Question").notNull(),
+  CorrectAns: text("CorrectAns").notNull(),
+  UserAns: text("UserAns").notNull(),
+  feedback: text("feedback"),
+  rating: varchar("rating", { length: 50 }),
+  createdAt: timestamp("createdAt").defaultNow(),
+  Useremail: varchar("Useremail", { length: 255 }).notNull(),
 });

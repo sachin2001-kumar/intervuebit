@@ -7,7 +7,7 @@ export const InterviewFormSchema = z.object({
     .trim()
     .min(3, {
       message:
-        "Job title must be at least 3 characters. Example: Frontend Developer, Full Stack Engineer.",
+        "Job title must be at least 2 characters. Example: Frontend Developer, Full Stack Engineer.",
     })
     .max(100, { message: "Job title is too long." }),
 
