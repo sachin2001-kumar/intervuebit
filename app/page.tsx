@@ -1,4 +1,4 @@
-import { HomeCom } from "./Components/HomeCom";
+import { HomeCom } from "../Components/HomeCom";
 
 export default function Home() {
   return (
