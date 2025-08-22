@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useActiveSectionContext } from "../lib/Active";
+import { useActiveSectionContext } from "../../lib/Active";
 import { motion } from "framer-motion";
 import {
   Menubar,
@@ -10,7 +10,7 @@ import {
   MenubarTrigger,
 } from "@/ui/menubar";
 import { MenuIcon } from "lucide-react";
-import { NAV_LINKS } from "../lib/Data";
+import { NAV_LINKS } from "../../lib/Data";
 import Link from "next/link";
 import clsx from "clsx";
 
