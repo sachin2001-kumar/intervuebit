@@ -22,10 +22,10 @@ export async function POST(req: Request) {
       .returning();
 
     return NextResponse.json({ success: true, data: result });
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error("Error in POST /api/interview:", error);
     return NextResponse.json(
-      { success: false, error: "Something went wrong" },
+      { success: false, error: error.message || "Unknown error" },
       { status: 500 }
     );
   }
