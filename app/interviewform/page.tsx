@@ -6,13 +6,11 @@ import {
   InterviewFormSchema,
   InterviewFormType,
 } from "@/Schema/InterviewFormSchema";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function InterviewForm() {
-  const [submittedData, setSubmittedData] = useState<InterviewFormType | null>(
-    null
-  );
+  const router = useRouter();
 
   const form = useForm<InterviewFormType>({
     resolver: zodResolver(InterviewFormSchema),
@@ -34,7 +32,8 @@ export default function InterviewForm() {
       const data = await res.json();
 
       if (data.success) {
-        setSubmittedData(values);
+        // Redirect to the start interview page
+        router.push(`/dashboard/interview/${data.data[0].mockId}`);
       } else {
         alert("Failed to save interview details");
       }
@@ -92,11 +91,9 @@ export default function InterviewForm() {
               <label className="block font-medium mb-1">Skills</label>
               <textarea
                 placeholder="e.g. HTML, CSS, Java, React.js, Next.js"
-                value={form.watch("Skills") || ""}
-                onChange={(e) => form.setValue("Skills", e.target.value)}
+                {...form.register("Skills")}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
               />
-
               {form.formState.errors.Skills && (
                 <p className="text-red-500 text-sm mt-1">
                   {form.formState.errors.Skills.message as string}
@@ -142,21 +139,6 @@ export default function InterviewForm() {
               </motion.button>
             </motion.div>
           </form>
-
-          {/* Preview Submitted Data
-          {submittedData && (
-            <motion.div
-              className="mt-6 p-4 bg-gray-50 rounded-lg border"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h3 className="font-semibold mb-2">Submitted Data:</h3>
-              <pre className="text-sm">
-                {JSON.stringify(submittedData, null, 2)}
-              </pre>
-            </motion.div>
-          )} */}
         </div>
       </motion.div>
     </div>
