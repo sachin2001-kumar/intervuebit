@@ -8,6 +8,7 @@ export const InterviewDetails = pgTable("InterviewDetails", {
   JobDesc: text("JobDesc").notNull(),
   JobExp: varchar("JobExp", { length: 50 }).notNull(),
   mockId: varchar("mockId", { length: 255 }).notNull(),
+  createdBy: varchar("createdBy").notNull(),
 });
 
 export const UserAnswerDetails = pgTable("UserAnswerDetails", {

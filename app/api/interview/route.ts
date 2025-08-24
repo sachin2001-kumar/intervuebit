@@ -2,9 +2,12 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { InterviewDetails } from "@/drizzle/Schema";
 import { v4 as uuidv4 } from "uuid";
+import { currentUser } from "@clerk/nextjs/server";
+import moment from "moment";
 
 export async function POST(req: Request) {
   try {
+    const user = await currentUser();
     const body = await req.json();
 
     const { JobTitle, Skills, YearsOfExperience } = body;
@@ -18,8 +21,10 @@ export async function POST(req: Request) {
         JobExp: YearsOfExperience.toString(),
         mockId: uuidv4(),
         JsonMockResp: "{}",
+        createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
+        createdAt: new Date(),
       })
-      .returning();
+      .returning({ mockId: InterviewDetails.mockId });
 
     return NextResponse.json({ success: true, data: result });
   } catch (error: any) {
