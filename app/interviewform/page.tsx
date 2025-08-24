@@ -8,9 +8,12 @@ import {
 } from "@/Schema/InterviewFormSchema";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { LoaderCircle } from "lucide-react";
 
 export default function InterviewForm() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<InterviewFormType>({
     resolver: zodResolver(InterviewFormSchema),
@@ -22,6 +25,7 @@ export default function InterviewForm() {
   });
 
   const onSubmit = async (values: InterviewFormType) => {
+    setLoading(true);
     try {
       const res = await fetch("/api/interview", {
         method: "POST",
@@ -32,14 +36,17 @@ export default function InterviewForm() {
       const data = await res.json();
 
       if (data.success) {
-        // Redirect to the start interview page
-        router.push(`/dashboard/interview/${data.data[0].mockId}`);
+        form.reset(); // clear form
+        alert("Success");
+        router.push(`interview/${data.data[0].mockId}`);
       } else {
         alert("Failed to save interview details");
       }
     } catch (err) {
       console.error(err);
       alert("Error saving interview details");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -133,9 +140,20 @@ export default function InterviewForm() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition"
+                disabled={loading}
+                className={`w-full font-semibold py-3 rounded-lg shadow-md transition text-white ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
               >
-                Generate Mock Interview
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <LoaderCircle className="animate-spin" /> Generating...
+                  </span>
+                ) : (
+                  "Generate Mock Interview"
+                )}
               </motion.button>
             </motion.div>
           </form>

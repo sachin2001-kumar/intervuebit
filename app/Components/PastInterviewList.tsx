@@ -31,7 +31,7 @@ export const PastInterviewList = () => {
       {InterviewList.map((interview) => (
         <div key={interview.id} className="p-2 border-b">
           <p>
-            <strong>{interview.JobPosition}</strong> – {interview.JobExp} yrs
+            <strong>{interview.JobPosition}</strong> {interview.JobExp} yrs
           </p>
           <p className="text-sm text-gray-500">{interview.JobDesc}</p>
         </div>
