@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { InterviewDetails } from "@/drizzle/Schema";
 import { v4 as uuidv4 } from "uuid";
 import { currentUser } from "@clerk/nextjs/server";
-import { chatSession } from "@/lib/GoogleAIModel"; // Gemini chatSession
+import { chatSession } from "@/lib/GoogleAIModel";
 
 export async function POST(req: Request) {
   try {
@@ -19,10 +19,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // 🔹 Construct input prompt (from your reference project)
+    // Construct input prompt (from your reference project)
     const inputPrompt = `Job position: ${JobTitle}, Job Description: ${Skills}, Years of Experience: ${YearsOfExperience}. 
 Depends on Job Position, Job Description, and Years of Experience. Generate ${
-      process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT || 4
+      process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT || 5
     } interview questions along with answers in JSON format. 
 Each question and answer should be in the format:
 [
@@ -30,24 +30,24 @@ Each question and answer should be in the format:
   ...
 ]`;
 
-    // 🔹 Call Google Gemini chatSession
-    const chatresult = await chatSession.sendMessage(inputPrompt);
-    const responseText = await chatresult.response.text();
+    //  Google Gemini chatSession
+    const responseText = await chatSession([inputPrompt]);
 
-    // 🔹 Extract JSON array from Gemini response
+    console.log("Gemini AI Response:", responseText);
+
     const jsonMatch = responseText?.match(/\[([\s\S]*?)\]/);
     if (!jsonMatch) {
       throw new Error("No valid JSON found from AI response");
     }
-    const jsonResp = JSON.parse(jsonMatch[0].trim());
+    const jsonResp = JSON.parse(jsonMatch[0]);
 
-    // 🔹 Safely get user email from Clerk
+    // user email from Clerk
     const email =
       user?.primaryEmailAddress?.emailAddress ||
       user?.emailAddresses?.[0]?.emailAddress ||
       "unknown";
 
-    // 🔹 Insert into database
+    //Insert database
     const result = await db
       .insert(InterviewDetails)
       .values({
