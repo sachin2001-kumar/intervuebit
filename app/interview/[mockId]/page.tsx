@@ -1,8 +1,5 @@
 "use client";
 import { Button } from "@/ui/button";
-import { db } from "@/lib/db";
-import { InterviewDetails } from "@/drizzle/Schema";
-import { eq } from "drizzle-orm";
 import { Lightbulb, WebcamIcon } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -11,7 +8,7 @@ import { motion } from "framer-motion";
 
 type InterviewDetail = {
   id: number;
-  createdAt: Date;
+  createdAt: string;
   JsonMockResp: string;
   JobPosition: string;
   JobDesc: string;
@@ -20,23 +17,25 @@ type InterviewDetail = {
   createdBy: string;
 };
 
-function Interview({ params }: any) {
+function Interview({ params }: { params: { mockId: string } }) {
   const [interviewData, setInterviewData] = useState<InterviewDetail | null>(
     null
   );
   const [webCamEnabled, setWebCamEnabled] = useState(false);
 
   useEffect(() => {
-    GetInterviewDetails();
-  }, []);
+    const GetInterviewDetails = async () => {
+      try {
+        const result = await fetch(`/api/interview/${params.mockId}`);
+        const data = await result.json();
+        setInterviewData(data);
+      } catch (error) {
+        console.error("Error fetching interview details:", error);
+      }
+    };
 
-  const GetInterviewDetails = async () => {
-    const result = await db
-      .select()
-      .from(InterviewDetails)
-      .where(eq(InterviewDetails.mockId, params.interviewId));
-    setInterviewData(result[0]);
-  };
+    GetInterviewDetails();
+  }, [params.mockId]);
 
   return (
     <motion.div
@@ -155,7 +154,7 @@ function Interview({ params }: any) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
       >
-        <Link href={`/interview/${params.interviewId}/start`}>
+        <Link href={`/interview/${params.mockId}/start`}>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button className="px-6 py-2 text-lg font-medium">
               Start Interview

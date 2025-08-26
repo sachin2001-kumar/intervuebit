@@ -32,8 +32,9 @@ Generate ${
     const responseText = result.response.text();
 
     console.log("Gemini AI Response:", responseText);
+    let cleanText = responseText.replace(/```json|```/g, "").trim();
 
-    const jsonMatch = responseText?.match(/\[([\s\S]*?)\]/);
+    const jsonMatch = cleanText.match(/\[([\s\S]*?)\]/);
     if (!jsonMatch) {
       throw new Error("No valid JSON found from AI response");
     }

@@ -1,22 +1,22 @@
 export const NAV_LINKS = [
   {
     name: "Home",
-    hash: "#home",
+    hash: "/",
   },
   {
     name: "About",
-    hash: "#about",
+    hash: "/",
   },
   {
     name: "Past Interview",
-    hash: "#Past Interview",
+    hash: "/",
   },
   {
     name: "FAQ",
-    hash: "#FAQ",
+    hash: "/",
   },
   {
     name: "Contact Us",
-    hash: "#Contact Us",
+    hash: "/",
   },
 ] as const;
