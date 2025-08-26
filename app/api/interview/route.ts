@@ -1,4 +1,3 @@
-// app/api/interview/route.ts
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { InterviewDetails } from "@/drizzle/Schema";
@@ -19,19 +18,18 @@ export async function POST(req: Request) {
       );
     }
 
-    // Construct input prompt (from your reference project)
-    const inputPrompt = `Job position: ${JobTitle}, Job Description: ${Skills}, Years of Experience: ${YearsOfExperience}. 
-Depends on Job Position, Job Description, and Years of Experience. Generate ${
+    const inputPrompt = `Job position: ${JobTitle}, Job Description: ${Skills}, Years of Experience: ${YearsOfExperience}.
+Generate ${
       process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT || 5
-    } interview questions along with answers in JSON format. 
-Each question and answer should be in the format:
+    } interview questions with answers in JSON format like:
 [
-  {"question": "Your question here", "answer": "Your answer here"},
-  ...
+  {"question": "Q1", "answer": "A1"},
+  {"question": "Q2", "answer": "A2"}
 ]`;
 
-    //  Google Gemini chatSession
-    const responseText = await chatSession([inputPrompt]);
+    // ✅ Use chatSession.sendMessage, not chatSession()
+    const result = await chatSession.sendMessage(inputPrompt);
+    const responseText = result.response.text();
 
     console.log("Gemini AI Response:", responseText);
 
@@ -41,14 +39,12 @@ Each question and answer should be in the format:
     }
     const jsonResp = JSON.parse(jsonMatch[0]);
 
-    // user email from Clerk
     const email =
       user?.primaryEmailAddress?.emailAddress ||
       user?.emailAddresses?.[0]?.emailAddress ||
       "unknown";
 
-    //Insert database
-    const result = await db
+    const resultDb = await db
       .insert(InterviewDetails)
       .values({
         JobPosition: JobTitle,
@@ -61,7 +57,7 @@ Each question and answer should be in the format:
       })
       .returning({ mockId: InterviewDetails.mockId });
 
-    return NextResponse.json({ success: true, data: result });
+    return NextResponse.json({ success: true, data: resultDb });
   } catch (error: any) {
     console.error("Error in POST /api/interview:", error);
     return NextResponse.json(

@@ -41,6 +41,7 @@ export default function InterviewForm() {
         router.push(`interview/${data.data[0].mockId}`);
       } else {
         alert("Failed to save interview details");
+        router.push(`interview/${data.data[0].mockId}`);
       }
     } catch (err) {
       console.error(err);
