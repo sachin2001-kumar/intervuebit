@@ -4,8 +4,14 @@ import React, { useEffect, useState } from "react";
 import { QuestionSection } from "./_components/QuestionSection";
 import { RecordAnswer } from "./_components/RecordAnswer";
 import { Button } from "@/ui/button";
+import Link from "next/link";
 
-type InterviewDetail = {
+export type Question = {
+  question: string;
+  answer: string;
+};
+
+export type InterviewDetail = {
   id: number;
   createdAt: string;
   JsonMockResp: string;
@@ -15,14 +21,15 @@ type InterviewDetail = {
   mockId: string;
   createdBy: string;
 };
+
 interface StartInterviewProps {
   params: { mockId: string };
 }
 
 export const StartInterview = ({ params }: StartInterviewProps) => {
-  const [QuestionIndex, setQuestionIndex] = useState(0);
-  const [InterviewQuestion, setInterviewQuestion] = useState();
-  const [InterviewData, setInterviewData] = useState<InterviewDetail | null>(
+  const [ActiveQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [interviewQuestion, setInterviewQuestion] = useState<Question[]>([]);
+  const [interviewData, setInterviewData] = useState<InterviewDetail | null>(
     null
   );
 
@@ -35,9 +42,9 @@ export const StartInterview = ({ params }: StartInterviewProps) => {
       const result = await fetch(`/api/interview/${params.mockId}/start`);
       const data = await result.json();
 
-      // Ensure JsonMockResp exists
+      // Parse JsonMockResp string to array
       if (data.JsonMockResp) {
-        setInterviewQuestion(data.JsonMockResp);
+        setInterviewQuestion(JSON.parse(data.JsonMockResp));
       }
 
       setInterviewData(data);
@@ -50,25 +57,37 @@ export const StartInterview = ({ params }: StartInterviewProps) => {
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <QuestionSection
-          InterviewQuestion={InterviewQuestion}
-          QuestionIndex={QuestionIndex}
+          InterviewQuestion={interviewQuestion}
+          ActiveQuestionIndex={ActiveQuestionIndex}
         />
         <RecordAnswer
-          InterviewData={InterviewData}
-          InterviewQuestion={InterviewQuestion}
-          QuestionIndex={QuestionIndex}
+          InterviewData={interviewData}
+          InterviewQuestion={interviewQuestion}
+          ActiveQuestionIndex={ActiveQuestionIndex}
         />
       </div>
-      <div className="flex justify-end gap-6">
-        {QuestionIndex > 0 && (
-          <Button onClick={() => setQuestionIndex(QuestionIndex - 1)}>
+
+      <div className="flex justify-end gap-6 mt-4">
+        {ActiveQuestionIndex > 0 && (
+          <Button
+            onClick={() => setActiveQuestionIndex(ActiveQuestionIndex - 1)}
+          >
             Previous Question
           </Button>
         )}
-        {QuestionIndex != InterviewQuestion?.length - 1 && (
-          <Button onClick={() => setQuestionIndex(QuestionIndex + 1)}>
-            Next Questions
+
+        {ActiveQuestionIndex < (interviewQuestion?.length ?? 0) - 1 && (
+          <Button
+            onClick={() => setActiveQuestionIndex(ActiveQuestionIndex + 1)}
+          >
+            Next Question
           </Button>
+        )}
+
+        {ActiveQuestionIndex === (interviewQuestion?.length ?? 0) - 1 && (
+          <Link href={`/dashboard/interview/${interviewData?.mockId}/feedback`}>
+            <Button>End Interview</Button>
+          </Link>
         )}
       </div>
     </div>

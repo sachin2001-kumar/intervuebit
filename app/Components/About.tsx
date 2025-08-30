@@ -1,0 +1,84 @@
+"use client";
+import { useSectionInView } from "@/lib/hooks";
+import { motion } from "framer-motion";
+import React from "react";
+
+export const About = () => {
+  const { ref } = useSectionInView("About");
+
+  const bulletPoints = [
+    "AI-powered mock interviews with real-time feedback",
+    "Personalized question sets based on job role & experience",
+    "Performance analytics with strengths & improvement areas",
+    "Practice with behavioral, technical, and situational questions",
+    "24/7 availability to prepare at your own pace",
+  ];
+
+  return (
+    <section
+      ref={ref}
+      id="About"
+      className="max-w-4xl mx-auto min-h-screen px-6 py-16 flex flex-col justify-center"
+    >
+      {/* Heading */}
+      <motion.h2
+        initial={{ opacity: 0, y: -30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3 }}
+        className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 text-center"
+      >
+        About Me
+      </motion.h2>
+
+      {/* Intro Text */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true, amount: 0.3 }}
+        className="text-lg md:text-xl text-gray-600 leading-relaxed text-center mb-10"
+      >
+        I’m building a{" "}
+        <span className="font-semibold text-indigo-600">
+          Mock AI Interview Platform
+        </span>{" "}
+        that empowers job seekers to practice and improve their interview skills
+        in a realistic environment. The platform simulates real interview
+        scenarios using advanced AI models, helping candidates gain confidence,
+        reduce anxiety, and receive actionable feedback that traditional mock
+        interviews often lack.
+        <br />
+        <br />
+        With a focus on{" "}
+        <span className="font-semibold">personalized guidance</span>, the system
+        adapts to different career paths and experience levels, ensuring every
+        candidate gets tailored practice. Whether you're preparing for a
+        technical role, a behavioral round, or even group discussions, this
+        platform acts as your **virtual mentor**, available anytime, anywhere.
+      </motion.p>
+
+      {/* Bullet Points */}
+      <ul className="space-y-4">
+        {bulletPoints.map((point, idx) => (
+          <motion.li
+            key={idx}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: idx * 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="flex items-start space-x-3 text-gray-700 text-lg"
+          >
+            <motion.span
+              className="w-3 h-3 rounded-full bg-indigo-500 mt-2 flex-shrink-0"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.4, delay: idx * 0.2 }}
+            />
+            <span>{point}</span>
+          </motion.li>
+        ))}
+      </ul>
+    </section>
+  );
+};
