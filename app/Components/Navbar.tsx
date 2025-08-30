@@ -16,22 +16,32 @@ import clsx from "clsx";
 
 export const Navbar = () => {
   const { ActiveSection, setActiveSection } = useActiveSectionContext();
+
   return (
     <header className="z-[999] relative">
       {/* Main nav background */}
       <motion.div
-        className="hidden sm:block fixed top-0 left-1/2 h-[4.5rem] w-full rounded-none sm:border bg-blue-50 sm:bg-[#bfb7b7b7] bg-opacity-80 backdrop-blur-[0.5rem] sm:top-6 sm:h-[3.25rem] sm:w-[34rem] sm:rounded-xl"
+        className="hidden sm:block fixed top-0 left-1/2 h-[4.5rem] w-full bg-transparent bg-opacity-80 backdrop-blur-[0.5rem] sm:top-0 sm:h-[4rem] sm:w-full sm:rounded-none border-b"
         initial={{ y: -100, x: "-50%", opacity: 0 }}
         animate={{ y: 0, x: "-50%", opacity: 1 }}
       ></motion.div>
 
       {/* Mobile Nav */}
-      <div className="flex justify-end">
-        <div className="sm:hidden">
-          <Menubar className="bg-transparent border-none h-20">
+      <div className="flex justify-between items-center px-4 h-16 sm:hidden relative z-[1000]">
+        {/* Logo */}
+        <Link href="/" className="font-extrabold text-lg">
+          INTERVUBIT
+        </Link>
+
+        <div className="flex items-center gap-4">
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
+            Get Started
+          </button>
+
+          <Menubar className="bg-transparent border-none">
             <MenubarMenu>
               <MenubarTrigger>
-                <MenuIcon size={40} />
+                <MenuIcon size={32} />
               </MenubarTrigger>
               <MenubarContent className="mr-4 font-bold border-r-8 bg-green-50">
                 {NAV_LINKS.map((item) => (
@@ -47,34 +57,41 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Desktop View  */}
-      <nav className="hidden sm:flex fixed left-1/2 top-[0.15rem] h-50 -translate-x-1/2 py-2 sm:top-[1.7rem] sm:h-[initial] sm:py-0">
-        <ul className="flex w-[48rem] items-center justify-center gap-y-0.5 sm:gap-y-0 text-[1rem] font-md text-black sm:w-[initial] ml-4 mr-4 sm:gap-5 sm:flex-nowrap">
+      {/* Desktop View */}
+      <nav className="hidden sm:flex fixed left-1/2 top-0 h-16 w-full -translate-x-1/2 px-8 items-center justify-between bg-transparent">
+        {/* Logo on left */}
+        <Link
+          href="#Home"
+          className="font-extrabold text-xl tracking-wide text-gray-900"
+        >
+          INTERVUBIT
+        </Link>
+
+        {/* Nav links in center */}
+        <ul className="flex items-center justify-center gap-6 text-[1rem] font-medium text-black">
           {NAV_LINKS.map((item) => (
             <motion.li
               key={item.hash}
-              className="h-3/4 flex items-center justify-center relative"
+              className="relative"
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
             >
               <Link
                 className={clsx(
-                  "flex w-full items-center justify-center px-[0.9vh] py-3 hover:text-gray-950 transition",
-                  {
-                    "text-gray-950": ActiveSection === item.name,
-                  }
+                  "px-3 py-2 hover:text-gray-900 transition relative",
+                  { "text-gray-900": ActiveSection === item.name }
                 )}
                 href={item.hash}
                 onClick={() => setActiveSection(item.name)}
               >
                 {item.name}
-                {item.name == ActiveSection && (
+                {item.name === ActiveSection && (
                   <motion.span
-                    className="bg-blue-200 rounded-md absolute inset-0 -z-10"
-                    layoutId="activeSection"
+                    className="absolute left-0 bottom-0 h-[2px] w-full bg-blue-500"
+                    layoutId="underline"
                     transition={{
                       type: "spring",
-                      stiffness: 380,
+                      stiffness: 400,
                       damping: 30,
                     }}
                   ></motion.span>
@@ -83,6 +100,11 @@ export const Navbar = () => {
             </motion.li>
           ))}
         </ul>
+
+        {/* Button on right */}
+        <button className="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
+          Get Started
+        </button>
       </nav>
     </header>
   );

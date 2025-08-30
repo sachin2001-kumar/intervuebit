@@ -1,23 +1,23 @@
 export const NAV_LINKS = [
   {
     name: "Home",
-    hash: "/",
+    hash: "#Home",
   },
   {
     name: "About",
-    hash: "/About",
+    hash: "#About",
   },
   {
     name: "Past Interview",
-    hash: "/PI",
+    hash: "#Past-Interview",
   },
   {
     name: "FAQ",
-    hash: "/FAQ",
+    hash: "#FAQ",
   },
   {
     name: "Contact Us",
-    hash: "/CU",
+    hash: "#Contact-Us",
   },
 ] as const;
 
@@ -48,4 +48,12 @@ export const FAQS = [
     answer:
       "Absolutely! You can access past interview attempts, review feedback, and track your improvement over time within your account dashboard.",
   },
+];
+
+export const bulletPoints = [
+  "AI-powered mock interviews with real-time feedback",
+  "Personalized question sets based on job role & experience",
+  "Performance analytics with strengths & improvement areas",
+  "Practice with behavioral, technical, and situational questions",
+  "24/7 availability to prepare at your own pace",
 ];

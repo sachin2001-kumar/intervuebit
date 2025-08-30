@@ -2,13 +2,14 @@
 import { useState, useEffect } from "react";
 import { FAQS } from "@/lib/Data";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react"; // better icon
+import { ChevronDown } from "lucide-react";
 import { useActiveSectionContext } from "@/lib/Active";
 import { useSectionInView } from "@/lib/hooks";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const { ref } = useSectionInView("FAQ");
+
   useEffect(() => {
     setOpenIndex(0);
   }, []);
@@ -19,16 +20,18 @@ export default function FAQ() {
 
   return (
     <motion.section
-      className="max-w-6xl mx-auto my-12 px-4 font-sans"
+      className="max-w-6xl mx-auto my-12 px-4 font-sans pt-20"
       initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ delay: 0.175 }}
       ref={ref}
       id="FAQ"
     >
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
         className="text-center mb-10 font-extrabold text-4xl text-gray-900"
       >
@@ -43,7 +46,8 @@ export default function FAQ() {
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
               className="rounded-2xl border border-gray-400 shadow-sm hover:shadow-md transition-all bg-gradient-to-r via-blue-300 to-yellow-100"
             >

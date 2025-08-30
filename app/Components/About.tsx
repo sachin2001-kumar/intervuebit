@@ -1,24 +1,16 @@
 "use client";
+import { bulletPoints } from "@/lib/Data";
 import { useSectionInView } from "@/lib/hooks";
 import { motion } from "framer-motion";
 import React from "react";
 
 export const About = () => {
   const { ref } = useSectionInView("About");
-
-  const bulletPoints = [
-    "AI-powered mock interviews with real-time feedback",
-    "Personalized question sets based on job role & experience",
-    "Performance analytics with strengths & improvement areas",
-    "Practice with behavioral, technical, and situational questions",
-    "24/7 availability to prepare at your own pace",
-  ];
-
   return (
     <section
       ref={ref}
       id="About"
-      className="max-w-4xl mx-auto min-h-screen px-6 py-16 flex flex-col justify-center"
+      className="max-w-4xl mx-auto min-h-screen px-6 py-16 flex flex-col justify-center pt-20"
     >
       {/* Heading */}
       <motion.h2
@@ -37,7 +29,7 @@ export const About = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         viewport={{ once: true, amount: 0.3 }}
-        className="text-lg md:text-xl text-gray-600 leading-relaxed text-center mb-10"
+        className="text-lg md:text-xl text-black leading-relaxed text-left mb-10 font-medium"
       >
         I’m building a{" "}
         <span className="font-semibold text-indigo-600">
@@ -51,11 +43,12 @@ export const About = () => {
         <br />
         <br />
         With a focus on{" "}
-        <span className="font-semibold">personalized guidance</span>, the system
-        adapts to different career paths and experience levels, ensuring every
-        candidate gets tailored practice. Whether you're preparing for a
-        technical role, a behavioral round, or even group discussions, this
-        platform acts as your **virtual mentor**, available anytime, anywhere.
+        <span className="font-semibold text-left">personalized guidance</span>,
+        the system adapts to different career paths and experience levels,
+        ensuring every candidate gets tailored practice. Whether you're
+        preparing for a technical role, a behavioral round, or even group
+        discussions, this platform acts as your **virtual mentor**, available
+        anytime, anywhere.
       </motion.p>
 
       {/* Bullet Points */}
@@ -67,7 +60,7 @@ export const About = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.2 }}
             viewport={{ once: true, amount: 0.2 }}
-            className="flex items-start space-x-3 text-gray-700 text-lg"
+            className="flex items-start space-x-3 text-black text-xl font-bold"
           >
             <motion.span
               className="w-3 h-3 rounded-full bg-indigo-500 mt-2 flex-shrink-0"
