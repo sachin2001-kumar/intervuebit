@@ -3,12 +3,18 @@
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Sparkles, Bot, Zap, CheckCircle2 } from "lucide-react";
+import { useSectionInView } from "@/lib/hooks";
 
 export const HomeCom = () => {
   const router = useRouter();
+  const { ref } = useSectionInView("Home");
 
   return (
-    <div className="container mx-auto px-4 text-center relative z-10">
+    <div
+      className="container mx-auto px-4 text-center relative z-10"
+      ref={ref}
+      id="Home"
+    >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
