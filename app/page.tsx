@@ -7,14 +7,14 @@ import { PastInterviewList } from "./Components/PastInterviewList";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-600 via-purple-400 to-purple-300 text-white">
+    <div className="">
       <Navbar />
-      <main className="pt-2">
-        <HomeCom />
-        <About />
-        {/* <PastInterviewList /> */}
-        <FAQ />
-      </main>
+
+      <HomeCom />
+      <About />
+      {/* <PastInterviewList /> */}
+      <FAQ />
+
       <Footer />
     </div>
   );

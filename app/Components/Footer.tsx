@@ -31,7 +31,7 @@ export const Footer = () => {
               INTERVUBIT
             </span>
           </h2>
-          <p className="text-sm leading-relaxed max-w-sm mx-auto md:mx-2 md:text-left">
+          <p className="text-sm text-left leading-relaxed max-w-sm mx-auto md:mx-2 md:text-left">
             Practice smarter with our AI-powered mock interview platform. Gain
             real-time feedback, sharpen your skills, and build confidence to
             crack your dream job interviews.

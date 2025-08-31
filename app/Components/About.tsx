@@ -10,7 +10,7 @@ export const About = () => {
     <section
       ref={ref}
       id="About"
-      className="max-w-4xl mx-auto min-h-screen px-6 py-16 flex flex-col justify-center pt-20"
+      className="max-w-6xl mx-auto m-24 px-6 flex flex-col justify-center p-6 border-gray-700 rounded-4xl scroll-mt-24"
     >
       {/* Heading */}
       <motion.h2
@@ -32,7 +32,7 @@ export const About = () => {
         className="text-lg md:text-xl text-black leading-relaxed text-left mb-10 font-medium"
       >
         I’m building a{" "}
-        <span className="font-semibold text-indigo-600">
+        <span className="font-semibold text-emerald-100">
           Mock AI Interview Platform
         </span>{" "}
         that empowers job seekers to practice and improve their interview skills

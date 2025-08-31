@@ -7,13 +7,13 @@ import { useSectionInView } from "@/lib/hooks";
 
 export const HomeCom = () => {
   const router = useRouter();
-  const { ref } = useSectionInView("Home");
+  const { ref } = useSectionInView("Home", 0.5);
 
   return (
     <div
-      className="container mx-auto px-4 text-center relative z-10"
-      ref={ref}
       id="Home"
+      ref={ref}
+      className="container mx-auto px-4 text-center relative z-10 m-4 scroll-mt-24"
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -22,8 +22,8 @@ export const HomeCom = () => {
         className="max-w-4xl mx-auto mt-20 bg-transparent"
       >
         {/* Tagline */}
-        <div className="inline-flex items-center space-x-2 border border-indigo-500/30 rounded-full px-4 py-2 mb-8 shadow-sm">
-          <Sparkles className="h-4 w-4 text-indigo-500" />
+        <div className="inline-flex items-center space-x-2 border border-indigo-500/30 rounded-full px-4 py-2 mb-8 shadow-sm bg-cyan-500">
+          <Sparkles className="h-4 w-4 text-indigo-900" />
           <span className="text-sm font-medium text-gray-800">
             Practice Smarter, Interview Better
           </span>
@@ -42,27 +42,21 @@ export const HomeCom = () => {
           </span>
         </h1>
 
-        {/* Subheading */}
-        <p className="text-lg md:text-xl text-gray-800 mb-10 max-w-2xl mx-auto leading-relaxed text-center">
+        <p className="text-lg md:text-xl text-gray-900 mb-10 max-w-2xl mx-auto leading-relaxed text-center">
           Sharpen your interview skills with real-time AI feedback, personalized
           questions, and detailed performance analytics. Gain confidence and
           prepare for success in your dream job interviews.
         </p>
 
-        {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
           <button
             onClick={() => router.push("/interviewform")}
-            className="group bg-blue-600 px-8 py-4 rounded-lg text-white font-semibold text-lg hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 flex items-center space-x-2"
+            className="group bg-gradient-to-r from-cyan-400 via-emerald-500 to-fuchsia-100 px-8 py-4 rounded-lg text-white font-semibold text-lg hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 flex items-center space-x-2"
           >
             <span>🚀 Add Interview</span>
           </button>
-          {/* <button className="px-8 py-4 rounded-lg border border-indigo-600 text-indigo-600 font-semibold text-lg hover:bg-indigo-600 hover:text-white transition-all duration-300">
-            Learn More
-          </button> */}
         </div>
 
-        {/* Features */}
         <div className="flex flex-wrap justify-center gap-4">
           <div className="flex items-center space-x-2 border border-indigo-500/20 rounded-full px-4 py-2 shadow-sm bg-gradient-to-r via-blue-200 to-purple-300">
             <Bot className="h-4 w-4 text-indigo-600" />

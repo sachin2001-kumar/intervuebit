@@ -19,34 +19,34 @@ export const Navbar = () => {
 
   return (
     <header className="z-[999] relative">
-      {/* Main nav background */}
+      {/* Background Blur Bar (Desktop only) */}
       <motion.div
-        className="hidden sm:block fixed top-0 left-1/2 h-[4.5rem] w-full bg-transparent bg-opacity-80 backdrop-blur-[0.5rem] sm:top-0 sm:h-[4rem] sm:w-full sm:rounded-none border-b"
+        className="hidden lg:block fixed top-0 left-1/2 h-[4.5rem] w-full bg-transparent border-gray-200/30"
         initial={{ y: -100, x: "-50%", opacity: 0 }}
         animate={{ y: 0, x: "-50%", opacity: 1 }}
       ></motion.div>
 
-      {/* Mobile Nav */}
-      <div className="flex justify-between items-center px-4 h-16 sm:hidden relative z-[1000]">
+      {/* Mobile / Tablet Nav */}
+      <div className="flex justify-between items-center px-4 h-16 lg:hidden fixed w-full top-0 bg-transparent backdrop-blur-md z-[1000] border-b border-gray-200/30">
         {/* Logo */}
-        <Link href="/" className="font-extrabold text-lg">
+        <Link href="/" className="font-extrabold text-lg text-gray-900">
           INTERVUBIT
         </Link>
 
         <div className="flex items-center gap-4">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
+          <button className="bg-cyan-700 text-black font-bold px-3 py-2 rounded-lg shadow-md hover:bg-blue-700 transition text-sm">
             Get Started
           </button>
 
           <Menubar className="bg-transparent border-none">
             <MenubarMenu>
               <MenubarTrigger>
-                <MenuIcon size={32} />
+                <MenuIcon size={28} />
               </MenubarTrigger>
-              <MenubarContent className="mr-4 font-bold border-r-8 bg-green-50">
+              <MenubarContent className="mr-4 font-bold bg-white/90 backdrop-blur-md shadow-lg rounded-md">
                 {NAV_LINKS.map((item) => (
                   <Link key={item.hash} href={`/${item.hash}`}>
-                    <MenubarItem className="p-4 w-[65vw]">
+                    <MenubarItem className="p-4 w-[65vw] text-gray-900 hover:bg-gray-100">
                       {item.name}
                     </MenubarItem>
                   </Link>
@@ -57,9 +57,9 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Desktop View */}
-      <nav className="hidden sm:flex fixed left-1/2 top-0 h-16 w-full -translate-x-1/2 px-8 items-center justify-between bg-transparent">
-        {/* Logo on left */}
+      {/* Desktop Nav (≥1024px) */}
+      <nav className="hidden lg:flex fixed left-1/2 top-0 h-16 w-full -translate-x-1/2 px-8 items-center justify-between bg-transparent backdrop-blur-md border-b-2 border-gray-900/40">
+        {/* Logo */}
         <Link
           href="#Home"
           className="font-extrabold text-xl tracking-wide text-gray-900"
@@ -67,8 +67,8 @@ export const Navbar = () => {
           INTERVUBIT
         </Link>
 
-        {/* Nav links in center */}
-        <ul className="flex items-center justify-center gap-6 text-[1rem] font-medium text-black">
+        {/* Links */}
+        <ul className="flex items-center justify-center gap-8 text-[1rem] font-medium text-black">
           {NAV_LINKS.map((item) => (
             <motion.li
               key={item.hash}
@@ -87,7 +87,7 @@ export const Navbar = () => {
                 {item.name}
                 {item.name === ActiveSection && (
                   <motion.span
-                    className="absolute left-0 bottom-0 h-[2px] w-full bg-blue-500"
+                    className="absolute left-0"
                     layoutId="underline"
                     transition={{
                       type: "spring",
@@ -101,8 +101,8 @@ export const Navbar = () => {
           ))}
         </ul>
 
-        {/* Button on right */}
-        <button className="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
+        {/* CTA Button */}
+        <button className="bg-cyan-700 text-black font-bold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
           Get Started
         </button>
       </nav>
