@@ -10,7 +10,7 @@ export const About = () => {
     <section
       ref={ref}
       id="About"
-      className="max-w-6xl mx-auto m-24 px-6 flex flex-col justify-center p-6 border-gray-700 rounded-4xl scroll-mt-24"
+      className="max-w-6xl mx-auto m-24 px-6 flex flex-col justify-center p-6 border-2  border-gray-700 rounded-4xl scroll-mt-24"
     >
       {/* Heading */}
       <motion.h2
