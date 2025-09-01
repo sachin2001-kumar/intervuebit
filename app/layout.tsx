@@ -26,7 +26,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen text-black p-6`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen text-black`}
         >
           {/* Background Layers */}
           <div className="fixed inset-0 -z-10">

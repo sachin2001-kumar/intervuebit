@@ -52,14 +52,14 @@ export default function InterviewForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <div className="flex justify-center items-center min-h-screen bg-transparent">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="w-full max-w-lg"
       >
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-[#6c634f94] rounded-2xl shadow-lg p-8 border-2 border-gray-500">
           <motion.h2
             className="text-2xl font-bold text-center mb-6"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -81,7 +81,7 @@ export default function InterviewForm() {
                 type="text"
                 placeholder="e.g. Frontend Developer"
                 {...form.register("JobTitle")}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border border-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500"
               />
               {form.formState.errors.JobTitle && (
                 <p className="text-red-500 text-sm mt-1">
@@ -100,7 +100,7 @@ export default function InterviewForm() {
               <textarea
                 placeholder="e.g. HTML, CSS, Java, React.js, Next.js"
                 {...form.register("Skills")}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 border-gray-900 resize-none [&::-webkit-resizer]:appearance-none"
               />
               {form.formState.errors.Skills && (
                 <p className="text-red-500 text-sm mt-1">
@@ -122,7 +122,7 @@ export default function InterviewForm() {
                 type="number"
                 placeholder="e.g. 2"
                 {...form.register("YearsOfExperience", { valueAsNumber: true })}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 border border-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               />
               {form.formState.errors.YearsOfExperience && (
                 <p className="text-red-500 text-sm mt-1">
@@ -145,7 +145,7 @@ export default function InterviewForm() {
                 className={`w-full font-semibold py-3 rounded-lg shadow-md transition text-white ${
                   loading
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-600 hover:bg-blue-700"
+                    : "bg-gradient-to-r via-blue-400 to-cyan-700 hover:bg-cyan-600"
                 }`}
               >
                 {loading ? (

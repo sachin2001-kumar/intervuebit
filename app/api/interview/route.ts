@@ -34,11 +34,26 @@ Generate ${
     console.log("Gemini AI Response:", responseText);
     let cleanText = responseText.replace(/```json|```/g, "").trim();
 
-    const jsonMatch = cleanText.match(/\[([\s\S]*?)\]/);
-    if (!jsonMatch) {
-      throw new Error("No valid JSON found from AI response");
+    // ✅ Extract the first valid JSON array safely
+    const startIdx = cleanText.indexOf("[");
+    const endIdx = cleanText.lastIndexOf("]");
+
+    if (startIdx === -1 || endIdx === -1) {
+      throw new Error("No valid JSON array found in AI response");
     }
-    const jsonResp = JSON.parse(jsonMatch[0]);
+
+    let jsonString = cleanText.substring(startIdx, endIdx + 1);
+
+    // ✅ Fix common JSON issues (like trailing commas)
+    jsonString = jsonString.replace(/,\s*([\]}])/g, "$1");
+
+    let jsonResp;
+    try {
+      jsonResp = JSON.parse(jsonString);
+    } catch (err) {
+      console.error("Failed to parse AI JSON:", jsonString);
+      throw new Error("AI response is not valid JSON");
+    }
 
     const email =
       user?.primaryEmailAddress?.emailAddress ||

@@ -7,15 +7,14 @@ import { PastInterviewList } from "./Components/PastInterviewList";
 
 export default function Home() {
   return (
-    <div className="">
+    <>
       <Navbar />
-
-      <HomeCom />
-      <About />
-      {/* <PastInterviewList /> */}
-      <FAQ />
-
+      <div className="p-6">
+        <HomeCom />
+        <About />
+        <FAQ />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }

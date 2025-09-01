@@ -1,4 +1,6 @@
 "use client";
+
+import { useParams } from "next/navigation";
 import { Button } from "@/ui/button";
 import { Lightbulb, WebcamIcon } from "lucide-react";
 import Link from "next/link";
@@ -17,7 +19,30 @@ type InterviewDetail = {
   createdBy: string;
 };
 
-function Interview({ params }: { params: { mockId: string } }) {
+// Animation Variants
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15 } },
+};
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
+const fadeInLeft = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0 },
+};
+const fadeInRight = {
+  hidden: { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0 },
+};
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1 },
+};
+
+function Interview() {
+  const { mockId } = useParams<{ mockId: string }>(); // ✅ useParams hook
   const [interviewData, setInterviewData] = useState<InterviewDetail | null>(
     null
   );
@@ -26,141 +51,137 @@ function Interview({ params }: { params: { mockId: string } }) {
   useEffect(() => {
     const GetInterviewDetails = async () => {
       try {
-        const result = await fetch(`/api/interview/${params.mockId}`);
+        const result = await fetch(`/api/interview/${mockId}`);
         const data = await result.json();
-        setInterviewData(data);
+        if (data.success) {
+          setInterviewData(data.data);
+        }
       } catch (error) {
         console.error("Error fetching interview details:", error);
       }
     };
 
-    GetInterviewDetails();
-  }, [params.mockId]);
+    if (mockId) GetInterviewDetails();
+  }, [mockId]);
 
   return (
     <motion.div
-      className="my-10"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      className="min-h-screen flex flex-col items-center justify-center py-10 px-4 bg-transparent"
+      initial="hidden"
+      animate="visible"
+      variants={container}
     >
-      {/* Page Header */}
-      <motion.h2
-        className="font-bold text-3xl mb-8 text-center"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+      <motion.h1
+        className="text-3xl md:text-3xl font-extrabold text-gray-100 text-center mb-6"
+        variants={fadeInUp}
       >
-        🚀 Let’s Get Started
-      </motion.h2>
+        🚀 Let's Get Started
+      </motion.h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Left Section */}
+      {/* Main Card */}
+      <motion.div
+        className="w-full max-w-6xl border border-gray-800 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-12 bg-white/10 backdrop-blur-md shadow-lg"
+        variants={fadeInUp}
+      >
+        {/* Left Section - Job Info & Tips */}
         <motion.div
-          className="flex flex-col my-5 gap-5"
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
+          className="flex-1 flex flex-col gap-6 justify-center"
+          variants={fadeInLeft}
         >
-          {/* Job Info Card */}
+          {/* Job Info */}
           <motion.div
-            className="flex flex-col p-5 rounded-lg border gap-5 shadow-md bg-white"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 200 }}
+            variants={fadeInUp}
+            whileHover={{
+              scale: 1.03,
+              boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+            }}
+            className="p-6 rounded-2xl border border-gray-300 flex flex-col gap-4 bg-neutral-600 backdrop-blur-sm"
           >
-            <h2 className="text-lg">
-              <strong>Job Role/Position: </strong>
+            <h3 className="text-lg font-semibold text-gray-100">Role:</h3>
+            <p className="text-gray-200 font-medium">
               {interviewData?.JobPosition}
-            </h2>
-            <h2 className="text-lg">
-              <strong>Job Description/Tech Stack: </strong>
+            </p>
+
+            <h3 className="text-lg font-semibold text-gray-100 mt-3">
+              Tech Stack:
+            </h3>
+            <p className="text-gray-200 font-medium">
               {interviewData?.JobDesc}
-            </h2>
-            <h2 className="text-lg">
-              <strong>Years of Experience: </strong>
-              {interviewData?.JobExp}
-            </h2>
+            </p>
+
+            <h3 className="text-lg font-semibold text-gray-100 mt-3">
+              Experience:
+            </h3>
+            <p className="text-gray-200 font-medium">
+              {interviewData?.JobExp} years
+            </p>
           </motion.div>
 
-          {/* Info Card */}
+          {/* Tips & Info */}
           <motion.div
-            className="p-5 border rounded-lg border-yellow-300 bg-yellow-100"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            whileHover={{ scale: 1.03 }}
+            variants={fadeInUp}
+            whileHover={{ scale: 1.02 }}
+            className="p-6 rounded-2xl border-l-4 border-yellow-400 bg-cyan-600 backdrop-blur-sm flex flex-col gap-3"
           >
-            <h2 className="flex gap-2 items-center text-yellow-600 font-semibold">
-              <Lightbulb />
-              <span>Information</span>
-            </h2>
-            <h2 className="mt-3 text-yellow-500">
-              {process.env.NEXT_PUBLIC_INFORMATION}
-            </h2>
+            <div className="flex items-center gap-2 text-yellow-500 font-semibold">
+              <Lightbulb size={22} />
+              <span>Tips & Info</span>
+            </div>
+            <p className="text-gray-900 text-sm leading-relaxed font-semibold">
+              {process.env.NEXT_PUBLIC_INFORMATION ||
+                "This platform empowers job seekers to practice interviews in a realistic environment. Get personalized guidance, simulate real scenarios, and improve your confidence before the real interview."}
+            </p>
           </motion.div>
         </motion.div>
 
         {/* Right Section - Webcam */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col items-center"
+          className="flex-1 flex flex-col items-center justify-center gap-6"
+          variants={fadeInRight}
         >
           {webCamEnabled ? (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              variants={scaleIn}
+              className="w-full max-w-sm rounded-2xl border border-gray-300 overflow-hidden bg-white/10 backdrop-blur-md"
             >
               <Webcam
+                mirrored
                 onUserMedia={() => setWebCamEnabled(true)}
                 onUserMediaError={() => setWebCamEnabled(false)}
-                mirrored={true}
-                style={{
-                  height: 300,
-                  width: 300,
-                  borderRadius: "10px",
-                  boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
-                }}
+                style={{ width: "100%", height: "360px", objectFit: "cover" }}
               />
             </motion.div>
           ) : (
             <motion.div
-              className="flex flex-col items-center w-full"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              variants={fadeInUp}
+              className="flex flex-col items-center gap-6 w-full max-w-sm"
             >
-              <WebcamIcon className="h-72 my-7 border rounded-lg w-full p-20 bg-secondary text-gray-400" />
-              <motion.div whileTap={{ scale: 0.95 }}>
-                <Button
-                  className="w-full"
-                  variant="ghost"
-                  onClick={() => setWebCamEnabled(true)}
-                >
-                  Enable Web Cam and Microphone
-                </Button>
-              </motion.div>
+              <div className="w-full h-72 rounded-2xl border border-gray-300 flex items-center justify-center bg-white/10 backdrop-blur-md">
+                <WebcamIcon className="h-20 w-20 text-gray-800" />
+              </div>
+              <Button
+                variant="default"
+                className="w-full py-5 text-lg font-semibold text-gray-950 hover:bg-cyan-700 bg-gradient-to-l via-cyan-400 to-blue-600"
+                onClick={() => setWebCamEnabled(true)}
+              >
+                Enable Webcam & Microphone
+              </Button>
             </motion.div>
           )}
-        </motion.div>
-      </div>
 
-      {/* Start Interview Button */}
-      <motion.div
-        className="flex justify-end items-end mt-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        <Link href={`/interview/${params.mockId}/start`}>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className="px-6 py-2 text-lg font-medium">
+          {/* Start Interview Button inside Right Section */}
+          <Link
+            href={`/interview/${mockId}/start`}
+            className="w-full flex justify-end mt-6"
+          >
+            <Button
+              variant="default"
+              className="w-fit border-2 border-gray-900 py-6 text-lg font-semibold shadow-lg justify-end bg-gradient-to-l via-emerald-400 to-cyan-500 text-black"
+            >
               Start Interview
             </Button>
-          </motion.div>
-        </Link>
+          </Link>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

@@ -34,7 +34,7 @@ export const Navbar = () => {
         </Link>
 
         <div className="flex items-center gap-4">
-          <button className="bg-cyan-700 text-black font-bold px-3 py-2 rounded-lg shadow-md hover:bg-blue-700 transition text-sm">
+          <button className="bg-cyan-700 text-black font-bold px-3 py-2 rounded-lg shadow-md hover:bg-cyan-500 transition text-sm">
             Get Started
           </button>
 
@@ -102,7 +102,7 @@ export const Navbar = () => {
         </ul>
 
         {/* CTA Button */}
-        <button className="bg-cyan-700 text-black font-bold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
+        <button className="bg-cyan-700 text-black font-bold px-5 py-2 rounded-lg shadow-md hover:bg-cyan-500 transition">
           Get Started
         </button>
       </nav>

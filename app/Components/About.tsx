@@ -10,7 +10,7 @@ export const About = () => {
     <section
       ref={ref}
       id="About"
-      className="max-w-6xl mx-auto m-24 px-6 flex flex-col justify-center p-6 border-2  border-gray-700 rounded-4xl scroll-mt-24"
+      className="max-w-6xl mx-auto m-24 px-6 flex flex-col justify-center p-10 border-2 border-gray-700 rounded-4xl scroll-mt-24 bg-gradient-to-r from-[#958975] via-[#736956db] to-[#7b6950]"
     >
       {/* Heading */}
       <motion.h2
@@ -29,10 +29,10 @@ export const About = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         viewport={{ once: true, amount: 0.3 }}
-        className="text-lg md:text-xl text-black leading-relaxed text-left mb-10 font-medium"
+        className="text-lg md:text-xl text-gray-800 leading-relaxed text-left mb-10 font-medium"
       >
         I’m building a{" "}
-        <span className="font-semibold text-emerald-100">
+        <span className="font-semibold bg-gradient-to-r from-cyan-900 via-purple-900 to-pink-900 bg-clip-text text-transparent">
           Mock AI Interview Platform
         </span>{" "}
         that empowers job seekers to practice and improve their interview skills
@@ -60,10 +60,10 @@ export const About = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.2 }}
             viewport={{ once: true, amount: 0.2 }}
-            className="flex items-start space-x-3 text-black text-xl font-bold"
+            className="flex items-start space-x-3 text-gray-800 text-xl font-bold"
           >
             <motion.span
-              className="w-3 h-3 rounded-full bg-indigo-500 mt-2 flex-shrink-0"
+              className="w-3 h-3 rounded-full bg-cyan-800 mt-2 flex-shrink-0"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.4, delay: idx * 0.2 }}
