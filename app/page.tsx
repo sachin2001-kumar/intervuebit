@@ -12,6 +12,7 @@ export default function Home() {
       <div className="p-6">
         <HomeCom />
         <About />
+        <PastInterviewList />
         <FAQ />
       </div>
       <Footer />
