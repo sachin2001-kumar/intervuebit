@@ -5,6 +5,7 @@ import { QuestionSection } from "./_components/QuestionSection";
 import { RecordAnswer } from "./_components/RecordAnswer";
 import { Button } from "@/ui/button";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export type Question = {
   question: string;
@@ -26,7 +27,8 @@ interface StartInterviewProps {
   params: { mockId: string };
 }
 
-export const StartInterview = ({ params }: StartInterviewProps) => {
+const StartInterview = ({ params }: StartInterviewProps) => {
+  const { mockId } = useParams<{ mockId: string }>();
   const [ActiveQuestionIndex, setActiveQuestionIndex] = useState(0);
   const [interviewQuestion, setInterviewQuestion] = useState<Question[]>([]);
   const [interviewData, setInterviewData] = useState<InterviewDetail | null>(
@@ -35,16 +37,16 @@ export const StartInterview = ({ params }: StartInterviewProps) => {
 
   useEffect(() => {
     getInterviewDetails();
-  }, [params.mockId]);
+  }, [mockId]);
 
   const getInterviewDetails = async () => {
     try {
-      const result = await fetch(`/api/interview/${params.mockId}/start`);
+      const result = await fetch(`/api/interview/${mockId}/start`);
       const data = await result.json();
 
       // Parse JsonMockResp string to array
       if (data.JsonMockResp) {
-        setInterviewQuestion(JSON.parse(data.JsonMockResp));
+        setInterviewQuestion(data.JsonMockResp);
       }
 
       setInterviewData(data);
@@ -93,3 +95,5 @@ export const StartInterview = ({ params }: StartInterviewProps) => {
     </div>
   );
 };
+
+export default StartInterview;

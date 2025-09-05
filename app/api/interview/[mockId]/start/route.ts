@@ -3,15 +3,19 @@ import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { mockId: string } }
-) {
+type Params = {
+  params: {
+    mockId: string;
+  };
+};
+
+export async function GET(req: NextRequest, { params }: Params) {
   // Fetch the interview detail from DB
+  const { mockId } = await params;
   const result = await db
     .select()
     .from(InterviewDetails)
-    .where(eq(InterviewDetails.mockId, params.mockId));
+    .where(eq(InterviewDetails.mockId, mockId));
 
   if (!result[0]) {
     return NextResponse.json({ error: "Interview not found" }, { status: 404 });

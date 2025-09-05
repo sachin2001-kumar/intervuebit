@@ -59,7 +59,7 @@ export const PastInterviewList = () => {
           whileInView={{ opacity: 1, y: 0 }}
           className="text-3xl font-medium text-gray-900 text-center"
         >
-          You're required login to get Access to your Past Interviews.{" "}
+          We Will Add Login facility soon. Don't go anywhere{" "}
         </motion.p>
         <Button className="flex bg-cyan-700 text-gray-900 hover:bg-cyan-600 font-bold w-fit text-3xl p-6 rounded-2xl">
           Get Started
