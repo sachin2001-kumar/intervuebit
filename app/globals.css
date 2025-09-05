@@ -5,6 +5,7 @@ body {
   margin: 0;
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
+  background-color: transparent;
 }
 
 /* Animation for smooth gradient movement */

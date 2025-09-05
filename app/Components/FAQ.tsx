@@ -21,7 +21,7 @@ export default function FAQ() {
     <section
       ref={ref}
       id="FAQ"
-      className="max-w-6xl mx-auto m-24 mb-4 px-6 flex flex-col justify-center border-gray-700 rounded-4xl scroll-mt-24"
+      className="max-w-6xl mx-auto m-16 p-6 px-6 flex flex-col justify-center border-gray-700 rounded-4xl scroll-mt-24"
     >
       {/* Heading */}
       <motion.h2

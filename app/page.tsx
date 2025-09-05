@@ -4,6 +4,7 @@ import { HomeCom } from "./Components/HomeCom";
 import { Navbar } from "./Components/Navbar";
 import { Footer } from "./Components/Footer";
 import { PastInterviewList } from "./Components/PastInterviewList";
+import { ContactUs } from "./Components/ContactUs";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <About />
         <PastInterviewList />
         <FAQ />
+        <ContactUs />
       </div>
       <Footer />
     </>

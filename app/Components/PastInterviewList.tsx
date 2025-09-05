@@ -36,7 +36,7 @@ export const PastInterviewList = () => {
     <section
       id="Past-Interview"
       ref={ref}
-      className="flex flex-col items-center p-6 border-2 rounded-4xl border-gray-800 max-w-6xl mx-auto bg-[#5b4d57]  scroll-mt-24 shadow-lg hover:shadow-2xl hover:shadow-[#b4a5b4] transition-all"
+      className="flex m-16 flex-col items-center p-6 border-2 rounded-2xl border-gray-800 max-w-6xl mx-auto bg-[#5b4d57]  scroll-mt-24 shadow-lg hover:shadow-2xl hover:shadow-[#b4a5b4] transition-all"
     >
       <motion.h2
         initial={{ opacity: 0, y: -30 }}

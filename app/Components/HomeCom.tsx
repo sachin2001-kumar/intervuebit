@@ -13,7 +13,7 @@ export const HomeCom = () => {
     <div
       id="Home"
       ref={ref}
-      className="container mx-auto px-4 text-center relative z-10 m-4 scroll-mt-24"
+      className="flex container mx-auto px-4 text-center relative z-10 p-6 scroll-mt-24 max-w-6xl"
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}

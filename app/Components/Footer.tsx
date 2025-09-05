@@ -6,16 +6,13 @@ import { useSectionInView } from "@/lib/hooks";
 import { NAV_LINKS } from "@/lib/Data";
 
 export const Footer = () => {
-  const { ref } = useSectionInView("Contact Us");
   return (
     <motion.footer
-      ref={ref}
-      id="Contact-Us"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="bg-gray-900 text-gray-300 py-10 mt-16 w-full pt-20"
+      className="bg-gray-900 text-gray-300 py-6 w-full pt-20"
     >
       {/* Parent flex */}
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-start gap-12 px-6 md:px-12 lg:px-20">

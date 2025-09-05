@@ -10,7 +10,7 @@ export const About = () => {
     <section
       ref={ref}
       id="About"
-      className="max-w-6xl mx-auto m-24 px-6 flex flex-col shadow-lg hover:shadow-2xl transition-all justify-center p-10 border-2 border-gray-700 rounded-4xl scroll-mt-24 bg-gradient-to-r from-[#958975] via-[#736956db] to-[#7b6950] hover:shadow-[#a78d60]"
+      className="max-w-6xl m-16 mx-auto px-6 flex flex-col shadow-lg hover:shadow-2xl transition-all justify-center p-10 border-2 border-gray-700 rounded-2xl scroll-mt-24 bg-gradient-to-r from-[#958975] via-[#736956db] to-[#7b6950] hover:shadow-[#a78d60]"
     >
       {/* Heading */}
       <motion.h2

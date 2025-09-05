@@ -46,7 +46,7 @@ const StartInterview = ({ params }: StartInterviewProps) => {
 
       // Parse JsonMockResp string to array
       if (data.JsonMockResp) {
-        setInterviewQuestion(data.JsonMockResp);
+        setInterviewQuestion(JSON.parse(data.JsonMockResp));
       }
 
       setInterviewData(data);

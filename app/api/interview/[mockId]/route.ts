@@ -11,7 +11,7 @@ type Params = {
 
 export async function GET(req: Request, { params }: Params) {
   try {
-    const { mockId } = await params; // <-- works in Next.js App Router
+    const { mockId } = await params;
 
     const result = await db
       .select()
