@@ -14,11 +14,11 @@ export const InterviewDetails = pgTable("InterviewDetails", {
 export const UserAnswerDetails = pgTable("UserAnswerDetails", {
   id: serial("id").primaryKey(),
   mockIdRef: varchar("mockIdRef", { length: 255 }).notNull(),
-  Question: text("Question").notNull(),
-  CorrectAns: text("CorrectAns").notNull(),
-  UserAns: text("UserAns").notNull(),
+  Question: text("Question"),
+  CorrectAns: text("CorrectAns"),
+  UserAns: text("UserAns"),
   feedback: text("feedback"),
   rating: varchar("rating", { length: 50 }),
   createdAt: timestamp("createdAt").defaultNow(),
-  Useremail: varchar("Useremail", { length: 255 }).notNull(),
+  Useremail: varchar("Useremail", { length: 255 }),
 });

@@ -15,6 +15,20 @@
       "when": 1756055681645,
       "tag": "0001_sparkling_kitty_pryde",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757155613280,
+      "tag": "0002_grey_lockheed",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1757175662455,
+      "tag": "0003_outstanding_smiling_tiger",
+      "breakpoints": true
     }
   ]
 }

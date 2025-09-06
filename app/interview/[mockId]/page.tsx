@@ -42,7 +42,7 @@ const scaleIn = {
 };
 
 function Interview() {
-  const { mockId } = useParams<{ mockId: string }>(); // ✅ useParams hook
+  const { mockId } = useParams<{ mockId: string }>();
   const [interviewData, setInterviewData] = useState<InterviewDetail | null>(
     null
   );

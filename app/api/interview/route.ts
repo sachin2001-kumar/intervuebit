@@ -31,7 +31,7 @@ Generate ${
     const result = await chatSession.sendMessage(inputPrompt);
     const responseText = result.response.text();
 
-    console.log("Gemini AI Response:", responseText);
+    // console.log("Gemini AI Response:", responseText);
     let cleanText = responseText.replace(/```json|```/g, "").trim();
 
     // ✅ Extract the first valid JSON array safely

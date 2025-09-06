@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
 
-export const page = () => {
+export default function FeedbackPage() {
   return <div>Hello World! This is your feedback Page.</div>;
-};
+}

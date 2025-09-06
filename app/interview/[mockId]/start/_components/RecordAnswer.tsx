@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { InterviewDetail } from "../page";
-import useSpeechToText from "react-hook-speech-to-text";
 import { Question } from "@/app/interview/[mockId]/start/page";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
-import Image from "next/image";
 import { Mic, StopCircle } from "lucide-react";
 import { Button } from "@/ui/button";
+import Webcam from "react-webcam";
+import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
 
 interface RecordAnswerProps {
   InterviewData: InterviewDetail | null;
@@ -21,102 +22,136 @@ export const RecordAnswer = ({
   InterviewQuestion,
   ActiveQuestionIndex,
 }: RecordAnswerProps) => {
-  const [loading, Setloading] = useState(false);
-  const [useranswer, Setuseranswer] = useState("");
+  const { mockId } = useParams<{ mockId: string }>();
   const { user } = useUser();
-  const {
-    error,
-    isRecording,
-    startSpeechToText,
-    stopSpeechToText,
-    results,
-    setResults,
-  } = useSpeechToText({
-    continuous: true,
-    useLegacyResults: false,
-  });
+  const webcamRef = useRef<Webcam>(null);
 
-  useEffect(() => {
-    results.forEach((result) => {
-      if (typeof result !== "string" && "transcript" in result) {
-        Setuseranswer((prevAns) => prevAns + result.transcript);
-      } else if (typeof result === "string") {
-        Setuseranswer((prevAns) => prevAns + result);
-      }
-    });
-  }, [results]);
-  useEffect(() => {
-    if (!isRecording && useranswer.length > 5) {
-      UpdateAnswer();
-    }
-  }, [useranswer]);
+  const [loading, setLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [userAnswer, setUserAnswer] = useState("");
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
+    null
+  );
 
-  const startsstoprecording = async () => {
+  // Start/Stop Recording
+  const startStopRecording = async () => {
     if (isRecording) {
-      stopSpeechToText();
+      mediaRecorder?.stop();
+      setIsRecording(false);
     } else {
-      startSpeechToText();
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+
+      recorder.ondataavailable = async (event) => {
+        if (event.data.size > 0) {
+          await sendAudioToTranscribe(event.data);
+        }
+      };
+
+      recorder.onstop = () => {
+        stream.getTracks().forEach((t) => t.stop());
+      };
+
+      recorder.start();
+      setMediaRecorder(recorder);
+      setIsRecording(true);
     }
   };
 
-  const UpdateAnswer = async () => {
-    console.log("User Answer:", useranswer);
-    Setloading(true);
+  // Send audio to backend for transcription
+  const sendAudioToTranscribe = async (audioBlob: Blob) => {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("file", audioBlob, "audio.webm");
+
     try {
-      const response = await fetch("", {
-        method: "post",
-        body: JSON.stringify({
-          Question: InterviewQuestion[ActiveQuestionIndex]?.question,
-          CorrectAns: InterviewQuestion[ActiveQuestionIndex]?.answer,
-          UserAns: useranswer,
-          Useremail: user?.primaryEmailAddress?.emailAddress,
-        }),
+      const res = await fetch(`/api/interview/${mockId}/transcribe`, {
+        method: "POST",
+        body: formData,
       });
-      const data = await response.json();
-      if (response.ok) {
-        toast("User Answer recorded successfully");
-        Setuseranswer(""), setResults([]);
+
+      const data = await res.json();
+      if (res.ok) {
+        setUserAnswer((prev) => prev + " " + data.text);
+        await updateAnswer(data.text);
       } else {
-        toast("Error: " + data.error);
+        toast("Error in transcription: " + data.error);
       }
     } catch (err) {
-      console.error("Error saving answer:", err);
-      toast("Failed to save answer");
+      console.error(err);
+      toast("Failed to transcribe");
     } finally {
-      Setloading(false);
+      setLoading(false);
     }
   };
 
-  if (error) return <p>Web Speech API is not available in this browser</p>;
+  // Save to DB
+  const updateAnswer = async (transcribedText: string) => {
+    try {
+      const response = await fetch(
+        `/api/interview/${mockId}/start/_components`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            Question: InterviewQuestion[ActiveQuestionIndex]?.question,
+            CorrectAns: InterviewQuestion[ActiveQuestionIndex]?.answer,
+            UserAns: transcribedText,
+            Useremail: user?.primaryEmailAddress?.emailAddress,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        toast("Answer recorded successfully");
+        setUserAnswer("");
+      } else {
+        toast("Error saving answer: " + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      toast("Failed to save answer");
+    }
+  };
 
   return (
-    <div className="flex justify-cente items-center flex-col">
-      <div className="flex flex-col my-20 justify-center items-center bg-black rounded-lg p-5">
-        <Image
-          src={"/webcam.png"}
-          width={200}
-          height={200}
-          className="absolute"
-          alt="webcam"
-          priority
+    <motion.div
+      className="flex flex-col gap-6 justify-center"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      {/* Webcam */}
+      <div className="w-full max-w-sm rounded-2xl border-2 border-gray-800 overflow-hidden bg-white/10 backdrop-blur-md h-72">
+        <Webcam
+          ref={webcamRef}
+          mirrored
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
+
+      {/* Record Button */}
       <Button
         disabled={loading}
-        variant="outline"
-        className="my-10"
-        onClick={startsstoprecording}
+        onClick={startStopRecording}
+        className={`w-fit flex items-center gap-2 py-6 rounded-xl font-semibold shadow-lg transition-all duration-300 ${
+          isRecording
+            ? "bg-red-600 text-white animate-pulse"
+            : "bg-cyan-700 text-black hover:bg-cyan-800"
+        } ${loading ? "opacity-60 cursor-not-allowed" : ""}`}
       >
         {isRecording ? (
-          <h2 className="text-red-600 items-center animate-pulse flex gap-2">
-            <StopCircle /> Stop Recording...
-          </h2>
+          <>
+            <StopCircle className="w-5 h-5" />
+            <span>Stop Recording</span>
+          </>
         ) : (
-          <h2 className="text-primary flex gap-2 items-center">
-            <Mic /> Record Answer
-          </h2>
+          <>
+            <Mic className="w-5 h-5" />
+            <span>Record Answer</span>
+          </>
         )}
       </Button>
-    </div>
+    </motion.div>
   );
 };

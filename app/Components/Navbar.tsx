@@ -35,7 +35,7 @@ export const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <button className="bg-cyan-700 text-black font-bold px-3 py-2 rounded-lg shadow-md hover:bg-cyan-500 transition text-sm">
-            Get Started
+            <Link href="/sign-in">Get Started</Link>
           </button>
 
           <Menubar className="bg-transparent border-none">
@@ -103,7 +103,7 @@ export const Navbar = () => {
 
         {/* CTA Button */}
         <button className="bg-cyan-700 text-black font-bold px-5 py-2 rounded-lg shadow-md hover:bg-cyan-500 transition">
-          Get Started
+          <Link href="/sign-in">Get Started</Link>
         </button>
       </nav>
     </header>
