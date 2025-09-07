@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { success } from "zod";
-import { fa } from "zod/v4/locales";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
