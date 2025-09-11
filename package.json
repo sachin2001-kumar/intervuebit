@@ -29,6 +29,7 @@
     "nodemailer": "^7.0.6",
     "openai": "^5.13.1",
     "pg": "^8.16.3",
+    "radix-ui": "^1.4.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",

@@ -49,8 +49,6 @@ export const RecordAnswer = ({
 
   const updateAnswer = async (transcribedText: string) => {
     setLoading(true);
-
-    // If the transcribed text is empty, use your default message.
     const finalAnswer = transcribedText.trim()
       ? transcribedText
       : "you answer is not recorded in the";
@@ -62,7 +60,7 @@ export const RecordAnswer = ({
         body: JSON.stringify({
           Question: InterviewQuestion[ActiveQuestionIndex]?.question,
           CorrectAns: InterviewQuestion[ActiveQuestionIndex]?.answer,
-          UserAns: finalAnswer, // Use the finalAnswer variable here
+          UserAns: finalAnswer,
           Useremail: user?.primaryEmailAddress?.emailAddress,
         }),
       });
