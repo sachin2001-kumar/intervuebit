@@ -85,64 +85,62 @@ function Interview() {
       >
         {/* Left Section - Job Info & Tips */}
         <motion.div
-          className="flex-1 flex flex-col gap-6 justify-center"
+          className="flex-1 min-w-0 flex flex-col gap-6 justify-center"
           variants={fadeInLeft}
         >
           {/* Job Info */}
           <motion.div
             variants={fadeInUp}
             whileHover={{
-              scale: 1.03,
+              scale: 1.02,
               boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
             }}
-            className="p-6 rounded-2xl border border-gray-300 flex flex-col gap-4 bg-neutral-600 backdrop-blur-sm"
+            className="p-6 rounded-2xl border-l-4 border-yellow-400 flex flex-col gap-4 bg-cyan-600 backdrop-blur-sm"
           >
-            <h3 className="text-lg font-semibold text-gray-100">Role:</h3>
-            <p className="text-gray-200 font-medium">
-              {interviewData?.JobPosition}
-            </p>
-
-            <h3 className="text-lg font-semibold text-gray-100 mt-3">
-              Tech Stack:
+            <h3 className="text-lg font-semibold text-gray-800">
+              Role: <span>{interviewData?.JobPosition}</span>
             </h3>
-            <p className="text-gray-200 font-medium">
-              {interviewData?.JobDesc}
-            </p>
 
-            <h3 className="text-lg font-semibold text-gray-100 mt-3">
-              Experience:
+            <h3 className="text-lg font-semibold text-gray-800 mt-3 break-words">
+              Tech Stack:{" "}
+              <span className="break-words">{interviewData?.JobDesc} </span>
             </h3>
-            <p className="text-gray-200 font-medium">
-              {interviewData?.JobExp} years
-            </p>
+
+            <h3 className="text-lg font-semibold text-gray-800 mt-3">
+              Experience: <span>{interviewData?.JobExp} years</span>
+            </h3>
           </motion.div>
 
           {/* Tips & Info */}
           <motion.div
             variants={fadeInUp}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{
+              scale: 1.02,
+              boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+            }}
             className="p-6 rounded-2xl border-l-4 border-yellow-400 bg-cyan-600 backdrop-blur-sm flex flex-col gap-3"
           >
             <div className="flex items-center gap-2 text-yellow-500 font-semibold">
               <Lightbulb size={22} />
               <span>Tips & Info</span>
             </div>
-            <p className="text-gray-900 text-sm leading-relaxed font-semibold">
+            <p className="text-gray-900 text-sm leading-relaxed font-semibold break-words">
               {process.env.NEXT_PUBLIC_INFORMATION ||
-                "This platform empowers job seekers to practice interviews in a realistic environment. Get personalized guidance, simulate real scenarios, and improve your confidence before the real interview."}
+                "This platform empowers job seekers to practice interviews in a realistic environment."}
             </p>
           </motion.div>
         </motion.div>
 
         {/* Right Section - Webcam */}
         <motion.div
-          className="flex-1 flex flex-col items-center justify-center gap-6"
+          className="flex-1 min-w-0 shrink-0 flex flex-col items-center justify-center gap-6"
           variants={fadeInRight}
         >
+          {/* Webcam Section */}
           {webCamEnabled ? (
             <motion.div
               variants={scaleIn}
-              className="w-full max-w-sm rounded-2xl border border-gray-300 overflow-hidden bg-white/10 backdrop-blur-md"
+              className="w-full max-w-sm rounded-2xl border-4 border-gray-700 overflow-hidden bg-white/10 backdrop-blur-md"
             >
               <Webcam
                 mirrored
@@ -169,7 +167,7 @@ function Interview() {
             </motion.div>
           )}
 
-          {/* Start Interview Button inside Right Section */}
+          {/* Start Interview Button */}
           <Link
             href={`/interview/${mockId}/start`}
             className="w-full flex justify-end mt-6"

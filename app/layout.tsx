@@ -28,19 +28,10 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen text-black`}
         >
-          {/* Background Layers */}
           <div className="fixed inset-0 -z-10">
-            {/* Soft pastel background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#938f95] via-[#585e64] to-[#bfdacd]" />
-
-            {/* Subtle radial spotlight */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.6),transparent_50%)] mix-blend-overlay" />
-
-            {/* Grain texture overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#908994] via-[#707b86] to-[#7d9087]" />
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-15 mix-blend-overlay" />
           </div>
-
-          {/* Main content (no navbar, no extra padding) */}
           <main className="flex-1">
             <Providers>{children}</Providers>
           </main>

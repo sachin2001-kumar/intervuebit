@@ -21,6 +21,7 @@ export default function FeedbackPage() {
   const [feedbackdata, setFeedbackdata] = useState<FeedbackDetail[] | null>(
     null
   );
+  const [showDataMessage, SetshowDataMessage] = useState(false);
   const { mockId } = useParams<{ mockId: string }>();
 
   useEffect(() => {
@@ -38,6 +39,13 @@ export default function FeedbackPage() {
     };
     if (mockId) GetFeedback();
   }, [mockId]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      SetshowDataMessage(true);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.div
@@ -74,9 +82,7 @@ export default function FeedbackPage() {
               transition={{ type: "spring", stiffness: 120 }}
             >
               <Collapsible className="border-2 border-gray-600 rounded-xl bg-white/10 backdrop-blur-sm shadow-md">
-                {/* Trigger */}
                 <CollapsibleTrigger className="flex items-center p-4 w-full text-left font-semibold text-gray-100">
-                  {/* Question part */}
                   <span className="flex-1 pr-4">
                     Question {index + 1}: {item.Question}
                   </span>
@@ -117,7 +123,9 @@ export default function FeedbackPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            Wait! we are generating a feedback for you. Don't go anywhere!
+            {!showDataMessage
+              ? "⏳ Please hold on while we generate your personalized interview feedback..."
+              : "⚠️ We are Sorry! No Data Available."}
           </motion.p>
         )}
       </motion.div>
