@@ -1,1 +1,0 @@
-ALTER TABLE "InterviewDetails" ADD COLUMN "createdBy" varchar NOT NULL;

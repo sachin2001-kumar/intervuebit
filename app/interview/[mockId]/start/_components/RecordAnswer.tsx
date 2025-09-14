@@ -51,17 +51,23 @@ export const RecordAnswer = ({
     setLoading(true);
     const finalAnswer = transcribedText.trim()
       ? transcribedText
-      : "you answer is not recorded in the";
+      : "Sorry, You're answer is not converted into text. There is some error with WEB SPEECH API ";
 
     try {
       const response = await fetch(`/api/interview/${mockId}/recordans`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          Question: InterviewQuestion[ActiveQuestionIndex]?.question,
-          CorrectAns: InterviewQuestion[ActiveQuestionIndex]?.answer,
-          UserAns: finalAnswer,
           Useremail: user?.primaryEmailAddress?.emailAddress,
+          qaPairs: [
+            {
+              Question: InterviewQuestion[ActiveQuestionIndex]?.question,
+              CorrectAns: InterviewQuestion[ActiveQuestionIndex]?.answer,
+              UserAns: finalAnswer,
+              feedback: "Pending AI feedback", // can update later
+              rating: null,
+            },
+          ],
         }),
       });
 

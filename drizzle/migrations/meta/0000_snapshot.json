@@ -1,11 +1,11 @@
 {
-  "id": "8eb53cec-bf8d-40e1-bd0f-d117bbd83a13",
+  "id": "1034c5c0-2bad-44c2-8f82-7e3472540ee5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.InterviewDetails": {
-      "name": "InterviewDetails",
+    "public.InterviewformDetails": {
+      "name": "InterviewformDetails",
       "schema": "",
       "columns": {
         "id": {
@@ -50,6 +50,12 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
+        },
+        "createdBy": {
+          "name": "createdBy",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -60,8 +66,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.UserAnswerDetails": {
-      "name": "UserAnswerDetails",
+    "public.UserAnsDetails": {
+      "name": "UserAnsDetails",
       "schema": "",
       "columns": {
         "id": {
@@ -76,33 +82,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "Question": {
-          "name": "Question",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "CorrectAns": {
-          "name": "CorrectAns",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "UserAns": {
-          "name": "UserAns",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "feedback": {
-          "name": "feedback",
-          "type": "text",
+        "Useremail": {
+          "name": "Useremail",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
         },
-        "rating": {
-          "name": "rating",
-          "type": "varchar(50)",
+        "qaPairs": {
+          "name": "qaPairs",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         },
@@ -112,12 +100,6 @@
           "primaryKey": false,
           "notNull": false,
           "default": "now()"
-        },
-        "Useremail": {
-          "name": "Useremail",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},

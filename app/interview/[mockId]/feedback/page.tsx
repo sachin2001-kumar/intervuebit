@@ -27,11 +27,10 @@ export default function FeedbackPage() {
   useEffect(() => {
     const GetFeedback = async () => {
       try {
-        const data = await fetch(`/api/interview/${mockId}/feedback`);
-        const res = await data.json();
-        if (res.success) {
-          // Now expecting an array
-          setFeedbackdata(res.data);
+        const res = await fetch(`/api/interview/${mockId}/feedback`);
+        const data = await res.json();
+        if (data.success) {
+          setFeedbackdata(data.data); // ✅ direct qaPairs
         }
       } catch (error) {
         console.error("Error fetching interview details:", error);
@@ -62,6 +61,7 @@ export default function FeedbackPage() {
       >
         Interview Feedback
       </motion.h1>
+
       <motion.div
         className="mt-6 w-full flex flex-col gap-6"
         initial="hidden"
@@ -92,24 +92,24 @@ export default function FeedbackPage() {
                   </div>
                 </CollapsibleTrigger>
 
-                <CollapsibleContent className="p-4 border-t flex flex-col divide-y-2 divide-gray-600 bg-[#bec4c4] rounded-b-xl">
+                <CollapsibleContent className="p-4 border-t flex flex-col divide-y-2 divide-gray-600 bg-[#76b7b7] rounded-b-xl">
                   <div className="py-2">
                     <p className="text-md text-black">
                       <strong>Your Answer:</strong> {item.UserAns}
                     </p>
                   </div>
                   <div className="py-2">
-                    <p className="text-md text-green-700">
+                    <p className="text-md text-gray-900">
                       <strong>Correct Answer:</strong> {item.CorrectAns}
                     </p>
                   </div>
                   <div className="py-2">
-                    <p className="text-md text-yellow-900">
+                    <p className="text-md text-gray-900">
                       <strong>Rating:</strong> {item.rating}
                     </p>
                   </div>
                   <div className="py-2">
-                    <p className="text-md text-blue-700">
+                    <p className="text-md text-gray-900">
                       <strong>Feedback:</strong> {item.feedback}
                     </p>
                   </div>

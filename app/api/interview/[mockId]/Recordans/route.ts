@@ -1,4 +1,4 @@
-import { UserAnswerDetails } from "@/drizzle/Schema";
+import { UserInterviews } from "@/drizzle/Schema";
 import { db } from "@/lib/db";
 import { chatSession } from "@/lib/GoogleAIModel";
 import { NextResponse } from "next/server";
@@ -13,8 +13,13 @@ export async function POST(
     const body = await req.json();
     console.log("📩 Incoming body:", body);
 
-    const { UserAns, Question, CorrectAns, Useremail } = body;
-    const { mockId } = await params; // no need for await here
+    const { Useremail, qaPairs } = body;
+    if (!qaPairs || qaPairs.length === 0) {
+      return NextResponse.json({ error: "Missing qaPairs" }, { status: 400 });
+    }
+
+    const { Question, CorrectAns, UserAns } = qaPairs[0];
+    const { mockId } = params;
 
     // Validate
     if (!UserAns || !Question || !Useremail) {
@@ -45,23 +50,27 @@ export async function POST(
     // Debug before insert
     console.log("💾 Saving Answer Payload:", {
       mockIdRef: mockId,
-      question: Question,
-      correctAns: CorrectAns,
-      userAns: UserAns,
+      Question,
+      CorrectAns,
+      UserAns,
       feedback: finaljsonfeedbackresp?.feedback,
       rating: finaljsonfeedbackresp?.rating,
-      userEmail: Useremail,
+      Useremail,
     });
 
     // Insert into DB
-    await db.insert(UserAnswerDetails).values({
+    await db.insert(UserInterviews).values({
       mockIdRef: mockId,
-      Question: Question, // ✅ matches schema
-      CorrectAns: CorrectAns, // ✅ matches schema
-      UserAns: UserAns, // ✅ matches schema
-      feedback: finaljsonfeedbackresp?.feedback || "No feedback",
-      rating: finaljsonfeedbackresp?.rating || null,
-      Useremail: Useremail, // ✅ matches schema
+      Useremail,
+      qaPairs: [
+        {
+          Question,
+          CorrectAns,
+          UserAns,
+          feedback: finaljsonfeedbackresp?.feedback || "No feedback",
+          rating: finaljsonfeedbackresp?.rating || null,
+        },
+      ],
       createdAt: new Date(),
     });
 

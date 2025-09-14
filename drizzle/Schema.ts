@@ -1,6 +1,13 @@
-import { pgTable, serial, varchar, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  serial,
+  varchar,
+  text,
+  timestamp,
+  jsonb,
+} from "drizzle-orm/pg-core";
 
-export const InterviewDetails = pgTable("InterviewDetails", {
+export const InterviewDetails = pgTable("InterviewformDetails", {
   id: serial("id").primaryKey(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   JsonMockResp: text("JsonMockResp").notNull(),
@@ -11,14 +18,18 @@ export const InterviewDetails = pgTable("InterviewDetails", {
   createdBy: varchar("createdBy").notNull(),
 });
 
-export const UserAnswerDetails = pgTable("UserAnswerDetails", {
+export const UserInterviews = pgTable("UserAnsDetails", {
   id: serial("id").primaryKey(),
   mockIdRef: varchar("mockIdRef", { length: 255 }).notNull(),
-  Question: text("Question"),
-  CorrectAns: text("CorrectAns"),
-  UserAns: text("UserAns"),
-  feedback: text("feedback"),
-  rating: varchar("rating", { length: 50 }),
-  createdAt: timestamp("createdAt").defaultNow(),
   Useremail: varchar("Useremail", { length: 255 }),
+  qaPairs: jsonb("qaPairs").$type<
+    {
+      Question: string;
+      CorrectAns: string;
+      UserAns: string;
+      feedback: string;
+      rating: string;
+    }[]
+  >(),
+  createdAt: timestamp("createdAt").defaultNow(),
 });

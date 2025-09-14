@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1755896390742,
-      "tag": "0000_calm_anthem",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1756055681645,
-      "tag": "0001_sparkling_kitty_pryde",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1757155613280,
-      "tag": "0002_grey_lockheed",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1757175662455,
-      "tag": "0003_outstanding_smiling_tiger",
+      "when": 1757869036141,
+      "tag": "0000_mushy_shadow_king",
       "breakpoints": true
     }
   ]

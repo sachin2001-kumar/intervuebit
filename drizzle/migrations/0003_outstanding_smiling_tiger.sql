@@ -1,1 +1,0 @@
-ALTER TABLE "UserAnswerDetails" ALTER COLUMN "Question" DROP NOT NULL;
